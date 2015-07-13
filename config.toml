@@ -1,0 +1,7 @@
+ListenHost = ":8080"
+ListenHostTLS = ":44380"
+SSLCert = "key_cert.pem"
+SSLPrivateKey = "key_priv.pem"
+Debug = true
+RedisServer = "localhost:6379"
+RedisPass = ""
