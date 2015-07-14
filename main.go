@@ -41,6 +41,10 @@ type Config struct {
 	RedisPass     string
 }
 
+func blogHandler(ctx *gin.Context) {
+	ctx.HTML(200, "index.html", gin.H{})
+}
+
 func newPool(server, password string) *redis.Pool {
 	return &redis.Pool{
 		MaxIdle:     3,
@@ -63,16 +67,19 @@ func newPool(server, password string) *redis.Pool {
 	}
 }
 
-func blogHandler(ctx *gin.Context) {
-	ctx.String(200, "hi")
-}
 
 func makeRouter() *gin.Engine {
 	if !conf.Debug {
 		gin.SetMode(gin.ReleaseMode)
 	}
+	// Create a router using gin's default setup
 	router := gin.Default()
+
+	// Setup out templates
+	router.LoadHTMLGlob("templates/*")
+
 	router.GET("/", blogHandler)
+
 	return router
 }
 
@@ -112,5 +119,4 @@ func init() {
 	}
 
 	pool = newPool(conf.RedisServer, conf.RedisPass)
-
 }
